@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConceptosPagoViewDlg" widgetVar="ConceptosPagoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewConceptosPagoTitle}" closeOnEscape="true">
+
+            <h:form id="ConceptosPagoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{conceptosPagoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewConceptosPagoLabel_identificador}"/>
+                        <h:outputText value="#{conceptosPagoController.selected.identificador}" title="#{myBundle.ViewConceptosPagoTitle_identificador}"/>
+
+                        <h:outputText value="#{myBundle.ViewConceptosPagoLabel_descripción}"/>
+                        <h:outputText value="#{conceptosPagoController.selected.descripción}" title="#{myBundle.ViewConceptosPagoTitle_descripción}"/>
+
+                        <h:outputText value="#{myBundle.ViewConceptosPagoLabel_estado}"/>
+                        <h:outputText value="#{conceptosPagoController.selected.estado}" title="#{myBundle.ViewConceptosPagoTitle_estado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ConceptosPagoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroSolicitudChequesViewDlg" widgetVar="RegistroSolicitudChequesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewRegistroSolicitudChequesTitle}" closeOnEscape="true">
+
+            <h:form id="RegistroSolicitudChequesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{registroSolicitudChequesController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewRegistroSolicitudChequesLabel_númeroSolicitud}"/>
+                        <h:outputText value="#{registroSolicitudChequesController.selected.númeroSolicitud}" title="#{myBundle.ViewRegistroSolicitudChequesTitle_númeroSolicitud}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroSolicitudChequesLabel_monto}"/>
+                        <h:outputText value="#{registroSolicitudChequesController.selected.monto}" title="#{myBundle.ViewRegistroSolicitudChequesTitle_monto}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroSolicitudChequesLabel_fechaRegistro}"/>
+                        <h:outputText value="#{registroSolicitudChequesController.selected.fechaRegistro}" title="#{myBundle.ViewRegistroSolicitudChequesTitle_fechaRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewRegistroSolicitudChequesLabel_estado}"/>
+                        <h:outputText value="#{registroSolicitudChequesController.selected.estado}" title="#{myBundle.ViewRegistroSolicitudChequesTitle_estado}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroSolicitudChequesLabel_cuentaCorriente}"/>
+                        <h:outputText value="#{registroSolicitudChequesController.selected.cuentaCorriente}" title="#{myBundle.ViewRegistroSolicitudChequesTitle_cuentaCorriente}"/>
+
+                        <h:outputText value="#{myBundle.ViewRegistroSolicitudChequesLabel_identificador}"/>
+                        <h:outputText value="#{registroSolicitudChequesController.selected.identificador.nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('RegistroSolicitudChequesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

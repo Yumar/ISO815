@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProveedoresViewDlg" widgetVar="ProveedoresViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewProveedoresTitle}" closeOnEscape="true">
+
+            <h:form id="ProveedoresViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{proveedoresController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewProveedoresLabel_identificador}"/>
+                        <h:outputText value="#{proveedoresController.selected.identificador}" title="#{myBundle.ViewProveedoresTitle_identificador}"/>
+
+                        <h:outputText value="#{myBundle.ViewProveedoresLabel_nombre}"/>
+                        <h:outputText value="#{proveedoresController.selected.nombre}" title="#{myBundle.ViewProveedoresTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewProveedoresLabel_tipoPersona}"/>
+                        <h:outputText value="#{proveedoresController.selected.tipoPersona}" title="#{myBundle.ViewProveedoresTitle_tipoPersona}"/>
+
+                        <h:outputText value="#{myBundle.ViewProveedoresLabel_númeroIdentificación}"/>
+                        <h:outputText value="#{proveedoresController.selected.númeroIdentificación}" title="#{myBundle.ViewProveedoresTitle_númeroIdentificación}"/>
+
+                        <h:outputText value="#{myBundle.ViewProveedoresLabel_cuentaProveedor}"/>
+                        <h:outputText value="#{proveedoresController.selected.cuentaProveedor}" title="#{myBundle.ViewProveedoresTitle_cuentaProveedor}"/>
+
+                        <h:outputText value="#{myBundle.ViewProveedoresLabel_estado}"/>
+                        <h:outputText value="#{proveedoresController.selected.estado}" title="#{myBundle.ViewProveedoresTitle_estado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ProveedoresViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

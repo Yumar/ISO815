@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroSolicitudChequesCreateDlg" widgetVar="RegistroSolicitudChequesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRegistroSolicitudChequesTitle}" closeOnEscape="true">
+
+            <h:form id="RegistroSolicitudChequesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{registroSolicitudChequesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroSolicitudChequesLabel_númeroSolicitud}" for="númeroSolicitud" />
+                        <p:inputText id="númeroSolicitud" value="#{registroSolicitudChequesController.selected.númeroSolicitud}" title="#{myBundle.CreateRegistroSolicitudChequesTitle_númeroSolicitud}" required="true" requiredMessage="#{myBundle.CreateRegistroSolicitudChequesRequiredMessage_númeroSolicitud}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroSolicitudChequesLabel_monto}" for="monto" />
+                        <p:inputText id="monto" value="#{registroSolicitudChequesController.selected.monto}" title="#{myBundle.CreateRegistroSolicitudChequesTitle_monto}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroSolicitudChequesLabel_fechaRegistro}" for="fechaRegistro" />
+                        <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy" value="#{registroSolicitudChequesController.selected.fechaRegistro}" title="#{myBundle.CreateRegistroSolicitudChequesTitle_fechaRegistro}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroSolicitudChequesLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{registroSolicitudChequesController.selected.estado}" style="width:125px">
+                            <f:selectItem itemLabel="Pendiente" itemValue="Pendiente" />
+                            <f:selectItem itemLabel="Anulado" itemValue="Anulado" />
+                            <f:selectItem itemLabel="Aprobado" itemValue="Aprobado" />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroSolicitudChequesLabel_cuentaCorriente}" for="cuentaCorriente" />
+                        <p:inputText id="cuentaCorriente" value="#{registroSolicitudChequesController.selected.cuentaCorriente}" title="#{myBundle.CreateRegistroSolicitudChequesTitle_cuentaCorriente}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroSolicitudChequesLabel_identificador}" for="identificador" />
+                        <p:selectOneMenu id="identificador" value="#{registroSolicitudChequesController.selected.identificador}"  converter="proveedoresConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{proveedoresController.items}"
+                                           var="identificadorItem"
+                                           itemValue="#{identificadorItem}"
+                                           itemLabel="#{identificadorItem.nombre.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{registroSolicitudChequesController.saveNew}" value="#{myBundle.Save}" update="display,:RegistroSolicitudChequesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RegistroSolicitudChequesCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RegistroSolicitudChequesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

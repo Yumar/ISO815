@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RegistroSolicitudChequesListForm">
+
+        <p:panel header="#{myBundle.ListRegistroSolicitudChequesTitle}">
+            <p:contextMenu id="RegistroSolicitudChequesDataTableContextMenu" for="datalist">  
+                <p:menuitem value="Aprobar" onclick="document.getElementById('RegistroSolicitudChequesListForm:aprobarButton').click();" icon="ui-icon-check"/>
+                <p:menuitem value="Anular" onclick="document.getElementById('RegistroSolicitudChequesListForm:anularButton').click();" icon="ui-icon-times"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{registroSolicitudChequesController.pendientes}"
+                         lazy="false"
+                         rowKey="#{item.númeroSolicitud}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{registroSolicitudChequesController.selected}"
+                         filteredValue="#{registroSolicitudChequesController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{registroSolicitudChequesController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.númeroSolicitud}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:anularButton,@form:aprobarButton,@form:RegistroSolicitudChequesDataTableContextMenu" listener="#{registroSolicitudChequesController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:anularButton,@form:aprobarButton,@form:RegistroSolicitudChequesDataTableContextMenu" listener="#{registroSolicitudChequesController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:anularButton,@form:aprobarButton" listener="#{registroSolicitudChequesController.resetParents}"/>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroSolicitudChequesTitle_númeroSolicitud}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.númeroSolicitud}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroSolicitudChequesTitle_monto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.monto}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroSolicitudChequesTitle_fechaRegistro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaRegistro}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroSolicitudChequesTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroSolicitudChequesTitle_cuentaCorriente}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaCorriente}"/>
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroSolicitudChequesTitle_identificador}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.identificador.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="aprobarButton" icon="ui-icon-check" actionListener="#{registroSolicitudChequesController.generarChueque}" value="Aprobar" update=":growl,datalist" disabled="#{empty registroSolicitudChequesController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="Esta seguro que desea aprobar el cheque" icon="ui-icon-alert"/>
+            </p:commandButton>
+            <p:commandButton id="anularButton" icon="ui-icon-times" actionListener="#{registroSolicitudChequesController.anularChueque}" value="Anular" update=":growl,datalist" disabled="#{empty registroSolicitudChequesController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="Esta seguro que desea anular el cheque" icon="ui-icon-alert"/>
+            </p:commandButton>            
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

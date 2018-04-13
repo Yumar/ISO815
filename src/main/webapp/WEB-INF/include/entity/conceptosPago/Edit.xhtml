@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ConceptosPagoEditDlg" widgetVar="ConceptosPagoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditConceptosPagoTitle}" closeOnEscape="true">
+
+            <h:form id="ConceptosPagoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{conceptosPagoController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditConceptosPagoLabel_identificador}" for="identificador" />
+                        <h:outputText id="identificador" value="#{conceptosPagoController.selected.identificador}" />
+
+                        <p:outputLabel value="#{myBundle.EditConceptosPagoLabel_descripción}" for="descripción" />
+                        <p:inputText id="descripción" value="#{conceptosPagoController.selected.descripción}" title="#{myBundle.EditConceptosPagoTitle_descripción}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditConceptosPagoLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{conceptosPagoController.selected.estado}" style="width:125px">
+                            <f:selectItem itemLabel="Activo" itemValue="Activo" />
+                            <f:selectItem itemLabel="Inactivo" itemValue="Inactivo" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{conceptosPagoController.save}" value="#{myBundle.Save}" update="display,:ConceptosPagoListForm:datalist,:ConceptosPagoListForm:ConceptosPagoDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ConceptosPagoEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ConceptosPagoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

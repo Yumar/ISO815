@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProveedoresEditDlg" widgetVar="ProveedoresEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditProveedoresTitle}" closeOnEscape="true">
+
+            <h:form id="ProveedoresEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{proveedoresController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditProveedoresLabel_identificador}" for="identificador" />
+                        <h:outputText id="identificador" value="#{proveedoresController.selected.identificador}" />
+
+                        <p:outputLabel value="#{myBundle.EditProveedoresLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{proveedoresController.selected.nombre}" title="#{myBundle.EditProveedoresTitle_nombre}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditProveedoresLabel_tipoPersona}" for="tipoPersona" />
+                        <p:selectOneMenu id="tipoPersona" value="#{proveedoresController.selected.tipoPersona}" style="width:125px">
+                            <f:selectItem itemLabel="Fisica" itemValue="Fisica" />
+                            <f:selectItem itemLabel="Juridica" itemValue="Juridica" />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{myBundle.EditProveedoresLabel_númeroIdentificación}" for="númeroIdentificación" />
+                        <p:inputText id="númeroIdentificación" value="#{proveedoresController.selected.númeroIdentificación}" title="#{myBundle.EditProveedoresTitle_númeroIdentificación}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditProveedoresLabel_cuentaProveedor}" for="cuentaProveedor" />
+                        <p:inputText id="cuentaProveedor" value="#{proveedoresController.selected.cuentaProveedor}" title="#{myBundle.EditProveedoresTitle_cuentaProveedor}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.EditProveedoresLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{proveedoresController.selected.estado}" style="width:125px">
+                            <f:selectItem itemLabel="Activo" itemValue="Activo" />
+                            <f:selectItem itemLabel="Inactivo" itemValue="Inactivo" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{proveedoresController.save}" value="#{myBundle.Save}" update="display,:ProveedoresListForm:datalist,:ProveedoresListForm:ProveedoresDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProveedoresEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ProveedoresEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

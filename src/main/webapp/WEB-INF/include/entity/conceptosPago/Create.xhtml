@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConceptosPagoCreateDlg" widgetVar="ConceptosPagoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateConceptosPagoTitle}" closeOnEscape="true">
+
+            <h:form id="ConceptosPagoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{conceptosPagoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateConceptosPagoLabel_descripción}" for="descripción" />
+                        <p:inputText id="descripción" value="#{conceptosPagoController.selected.descripción}" title="#{myBundle.CreateConceptosPagoTitle_descripción}" size="50" maxlength="50"/>
+
+                        <p:outputLabel value="#{myBundle.CreateConceptosPagoLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{conceptosPagoController.selected.estado}" style="width:125px">
+                            <f:selectItem itemLabel="Activo" itemValue="Activo" />
+                            <f:selectItem itemLabel="Inactivo" itemValue="Inactivo" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{conceptosPagoController.saveNew}" value="#{myBundle.Save}" update="display,:ConceptosPagoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ConceptosPagoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ConceptosPagoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

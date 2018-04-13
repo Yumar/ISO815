@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="RegistroSolicitudChequesEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditRegistroSolicitudChequesTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:RegistroSolicitudChequesListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="RegistroSolicitudChequesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{registroSolicitudChequesController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditRegistroSolicitudChequesLabel_númeroSolicitud}" for="númeroSolicitud" />
+                            <h:outputText id="númeroSolicitud" value="#{registroSolicitudChequesController.selected.númeroSolicitud}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRegistroSolicitudChequesLabel_monto}" for="monto" />
+                            <p:inputText id="monto" value="#{registroSolicitudChequesController.selected.monto}" title="#{myBundle.EditRegistroSolicitudChequesTitle_monto}" size="30" maxlength="30"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRegistroSolicitudChequesLabel_fechaRegistro}" for="fechaRegistro" />
+                            <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy" value="#{registroSolicitudChequesController.selected.fechaRegistro}" title="#{myBundle.EditRegistroSolicitudChequesTitle_fechaRegistro}"  showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRegistroSolicitudChequesLabel_estado}" for="estado" />
+                            <p:inputText id="estado" value="#{registroSolicitudChequesController.selected.estado}" title="#{myBundle.EditRegistroSolicitudChequesTitle_estado}" size="10" maxlength="10"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRegistroSolicitudChequesLabel_cuentaCorriente}" for="cuentaCorriente" />
+                            <p:inputText id="cuentaCorriente" value="#{registroSolicitudChequesController.selected.cuentaCorriente}" title="#{myBundle.EditRegistroSolicitudChequesTitle_cuentaCorriente}" size="50" maxlength="50"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditRegistroSolicitudChequesLabel_identificador}" for="identificador" />
+                            <p:selectOneMenu id="identificador" value="#{registroSolicitudChequesController.selected.identificador}"  converter="proveedoresConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{proveedoresController.items}"
+                                               var="identificadorItem"
+                                               itemValue="#{identificadorItem}"
+                                               itemLabel="#{identificadorItem.nombre.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{registroSolicitudChequesController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:RegistroSolicitudChequesListPage:RegistroSolicitudChequesListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:RegistroSolicitudChequesListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>
